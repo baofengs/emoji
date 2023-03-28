@@ -8,8 +8,8 @@
     background-color: #fff;
 
     &--show {
-            animation: popup .25s cubic-bezier(0.075, 0.82, 0.165, 1);
-        }
+        animation: popup .25s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
 
     &-bg {
         position: fixed;
@@ -28,21 +28,33 @@
         justify-content: center;
         padding: .5em 0 .75em;
 
+        // &-anchor {
+        //     position: absolute;
+        //     bottom: .15em;
+        //     left: 60px;
+        //     width: 1em;
+        //     height: .15em;
+        //     border-radius: 99px;
+        //     background-color: black;
+        //     transition: all .125s cubic-bezier(0.075, 0.82, 0.165, 1);
+        // }
+    }
+
+    &-catigary {
+        position: relative;
+        width: 2.5em;
+        text-align: center;
         &-anchor {
             position: absolute;
-            bottom: .15em;
-            left: 60px;
+            bottom: -.5em;
+            left: 50%;
+            transform: translateX(-50%);
             width: 1em;
             height: .15em;
             border-radius: 99px;
             background-color: black;
-            transition: all .125s cubic-bezier(0.075, 0.82, 0.165, 1);
+            // transition: all .125s cubic-bezier(0.075, 0.82, 0.165, 1);
         }
-    }
-
-    &-catigary {
-        width: 2.5em;
-        text-align: center;
     }
 
     &-list {
@@ -79,7 +91,7 @@
             height: 100%;
             overflow-y: scroll;
         }
-        
+
     }
 }
 
@@ -88,6 +100,7 @@
         transform: translateY(100%);
         opacity: 0;
     }
+
     to {
         transform: translateY(0);
         opacity: 1;
@@ -96,12 +109,15 @@
 </style>
 
 <template>
-    <view :class="['cmp-emoji', {'cmp-emoji--show': show}]" v-if="show">
+    <view :class="['cmp-emoji', { 'cmp-emoji--show': show }]" v-if="show">
         <view class="cmp-emoji-catigaries">
             <template v-for="item of catigaries" :key="item">
-                <view class="cmp-emoji-catigary" @click="onChangeCatigary(item)">{{ item }}</view>
+                <view class="cmp-emoji-catigary" @click="onChangeCatigary(item)">
+                    {{ item }}
+                    <view v-if="catigary === item" class="cmp-emoji-catigary-anchor"></view>
+                </view>
             </template>
-            <view class="cmp-emoji-catigaries-anchor" :style="anchorStyle"></view>
+
         </view>
         <swiper class="cmp-emoji-swiper" @change="onChageSwiper" :current="currentSwiper">
             <template v-for="key of catigaries" :key="key">
